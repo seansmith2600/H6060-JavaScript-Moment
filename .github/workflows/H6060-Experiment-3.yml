@@ -79,6 +79,9 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Install Grunt
+        run: npm install -g grunt-cli@1.5.0
+
       - name: Install JavaScript Dependencies
         run: npm ci
 
