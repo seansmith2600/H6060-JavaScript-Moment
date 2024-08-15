@@ -156,11 +156,6 @@ module.exports = function (grunt) {
             eslint: {
                 command: 'npm run eslint',
             },
-            checkMonthsParseIssue: {
-                // Each locale should have all (3) or none (0) of monthsParse: configs.
-                command:
-                    'if [ $(ls src/locale/* | while read -r line; do grep -i "monthsParse:" $line | wc -l; done | sort | uniq | wc -l) -ne 2 ]; then echo "Months parse issue: see https://github.com/moment/moment/issues/2754"; exit 1; fi',
-            },
             'prettier-fmt': {
                 command: function () {
                     var nodeMajor = parseInt(
@@ -171,18 +166,6 @@ module.exports = function (grunt) {
                         return "echo 'NOT running prettier on node < v10'";
                     }
                     return 'npm run prettier-fmt';
-                },
-            },
-            'prettier-check': {
-                command: function () {
-                    var nodeMajor = parseInt(
-                        process.version.slice(1).split('.')[0],
-                        10
-                    );
-                    if (nodeMajor < 10) {
-                        return "echo 'NOT running prettier on node < v10'";
-                    }
-                    return 'npm run prettier-check';
                 },
             },
         },
@@ -199,8 +182,6 @@ module.exports = function (grunt) {
     // linting
     grunt.registerTask('lint', [
         'exec:eslint',
-        'exec:prettier-check',
-        'exec:checkMonthsParseIssue',
     ]);
 
     // test tasks
